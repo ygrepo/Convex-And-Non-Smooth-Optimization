@@ -3,7 +3,7 @@ __pycache__
 .ipynb_checkpoints
 
 # Remove Mac shit
-#.DS_Store
+.DS_Store
 
 # Remove Vim temp files
 *sw*

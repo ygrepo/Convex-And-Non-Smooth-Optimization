@@ -1,0 +1,253 @@
+\documentclass[10pt]{article}
+
+
+\usepackage{times}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[psamsfonts]{amssymb}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{graphics}
+\usepackage{enumerate}
+\usepackage{amstext}
+\usepackage{blkarray}
+\usepackage{url}
+\usepackage{epsfig}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{mathtools}
+ 
+\def\Kset{\mathbb{K}}
+\def\Nset{\mathbb{N}}
+\def\Qset{\mathbb{Q}}
+\def\Rset{\mathbb{R}}
+\def\Sset{\mathbb{S}}
+\def\Zset{\mathbb{Z}}
+\def\squareforqed{\hbox{\rlap{$\sqcap$}$\sqcup$}}
+\def\qed{\ifmmode\squareforqed\else{\unskip\nobreak\hfil
+\penalty50\hskip1em\null\nobreak\hfil\squareforqed
+\parfillskip=0pt\finalhyphendemerits=0\endgraf}\fi}
+
+\DeclareMathOperator*{\E}{\rm E}
+\DeclareMathOperator*{\argmax}{\rm argmax}
+\DeclareMathOperator*{\argmin}{\rm argmin}
+\DeclareMathOperator{\sgn}{sign}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\last}{last}
+\DeclareMathOperator{\sign}{\sgn}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\def\vcdim{\textnormal{VCdim}}
+\DeclareMathOperator*{\B}{\textbf{B}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\cX}{{\mathcal X}}
+\newcommand{\cY}{{\mathcal Y}}
+\newcommand{\cA}{{\mathcal A}}
+\newcommand{\ignore}[1]{}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bd}{\begin{description}}
+\newcommand{\ed}{\end{description}}
+\newcommand{\h}{\widehat}
+\newcommand{\e}{\epsilon}
+\newcommand{\mat}[1]{{\mathbf #1}}
+\newcommand{\R}{\mat{R}}
+\newcommand{\0}{\mat{0}}
+\newcommand{\M}{\mat{M}}
+
+\newcommand{\SP}{\mathbf{S}_{+}^n}
+
+\newcommand{\D}{\mat{D}}
+\renewcommand{\r}{\mat{r}}
+\newcommand{\x}{\mat{x}}
+\renewcommand{\u}{\mat{u}}
+\renewcommand{\v}{\mat{v}}
+\newcommand{\w}{\mat{w}}
+\renewcommand{\H}{\text{0}}
+\newcommand{\T}{\text{1}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\xxi}{{\boldsymbol \xi}}
+\newcommand{\ssigma}{{\boldsymbol \sigma}}
+\newcommand{\Alpha}{{\boldsymbol \alpha}}
+\newcommand{\tts}{\tt \small}
+\newcommand{\hint}{\emph{hint}}
+\newcommand{\matr}[1]{\bm{#1}}     % ISO complying version
+\newcommand{\vect}[1]{\bm{#1}}     % ISO complying version
+
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+
+%\renewcommand{\labelitemi}{$\bullet$}
+%\renewcommand{\labelitemii}{$\cdot$}
+%\renewcommand{\labelitemiii}{$\diamond$}
+%\renewcommand{\labelitemiv}{$\ast$}
+
+\newenvironment{solution}{\vspace{.25cm}\noindent{\it Solution:}}{}
+
+\begin{document}
+
+\noindent MATH-GA.2012.001 Selected Topics in Numerical Analysis :\\
+Convex and Nonsmooth Optimization, Spring 2020\\
+Homework Assignment 1 \\
+Yves Greatti - yg390\\
+
+\begin{enumerate}
+\item Prove that the quadratic cone is convex.
+Given the quadratic cone C = \{(x,t) $\in \mathbf{R}^{n+1} | ||x||_2 \le t$ \}. By triangle inequality, and homogeneity for any $x1,x2 \in C$ and $\theta \in [0,1]$:
+\begin{align*}
+|| \theta 
+		\begin{bmatrix}
+    			x1 \\ 
+			t
+		\end{bmatrix} 
++ (1 - \theta) 
+		\begin{bmatrix}
+    			x2 \\ 
+			t
+		\end{bmatrix} ||_2 &\le 
+|| \theta 
+		\begin{bmatrix}
+    			x1 \\ 
+			t
+		\end{bmatrix} ||_2 +	
+|| (1 - \theta) 
+		\begin{bmatrix}
+    			x2 \\ 
+			t
+		\end{bmatrix} ||_2 \\
+		&= \theta ||
+		\begin{bmatrix}
+    			x1 \\ 
+			t
+		\end{bmatrix} ||_2 +	
+(1 - \theta) ||
+		\begin{bmatrix}
+    			x2 \\ 
+			t
+		\end{bmatrix} ||_2 \\
+		& \le \theta t + (1-\theta) t \\
+		&= t	
+\end{align*}
+
+\item Prove (using the definition of convexity) that the intersection of two convex sets is convex. (See BV p.36) 
+Let C1, C2 two convex sets and $C3 = C1 \cap C2$. For any $x1, x2 \in C3$ and $\theta \in [0,1]$:
+\begin{align*}
+	\theta x1 + (1-\theta) x2 \in C1 \text{ since x1, x2 } \in C1 \\
+	\theta x1 + (1-\theta) x2 \in C2 \text{ since x1, x2 } \in C2 \\
+	\Rightarrow \theta x1 + (1-\theta) x2 \in C1 \cap C2 = C3
+\end{align*}
+C3 is convex.
+
+\item Prove that the image of a convex set under an affine function is convex, and that the inverse image is also convex.
+Given f an affine function, $f: \mathbf{R}^n \rightarrow \mathbf{R}^m$,
+with $f(x)=Ax + b$, where $A  \in \mathbf{R}^{m \times n}$, $b \in \mathbf{R}^m$ and suppose that $C \subseteq  \mathbf{R}^{n}$ is convex,
+
+$\forall y_1, y_2 \in f(C), \forall \theta \in [0, 1]$, and let $f(x_1)=y_1, f(x_2) = y_2$, we have: 
+\begin{align*}
+	\theta y_1  + (1-\theta) y_2 	&= \theta f(x_1)  + (1-\theta) f(x_2) \\
+							&= \theta (A x_1 + b) + (1-\theta) (A x_2 + b) \\
+							&= \theta  A (x_1 + x_2)
+\end{align*}
+which is a linear combination of $x_1, x_2$ with b =0, and since C is convex $x_1, x_2 \in C$, so $\theta y_1  + (1-\theta) y_2 \in f(C)$ and $f(C)$ is convex.
+
+Suppose now $\forall x_1, x_2 \in f^{-1}(C), \forall \theta \in [0, 1]$, and let $f(x_1)=y_1, f(x_2) = y_2$, with $y_1, y_2 \in C$, C is a convex set, we have: 
+\begin{align*}
+	f(\theta x_1  + (1-\theta) x_2) 	&= A [\theta x_1)  + (1-\theta) x_2]\\
+							&= \theta (A x_1 + b) + (1-\theta) (A x_2 + b) \\
+							&= \theta  y_1 + (1-\theta) y_2
+\end{align*}
+Since C is convex then $y_3 =\theta  y_1 + (1-\theta) y_2$ is also in C. Therefore we showed that there exist $y_3 \in C$ such that $f(\theta x_1  + (1-\theta) x_2) = y_3$
+which proves that $f^{-1}(C)$ is convex.
+
+\item BV Ex 2.1
+Let $C \subseteq  \mathbf{R}^{n}$ be a convex set, $x1_, \cdots, x_k \in C$ and  $\theta1, \cdots, \theta_k \in C$, with $\theta_i \ge 0$ and $\sum_i \theta_i = 1$.
+Then by definition of the convexity, for k=2, $\sum_{i=1}^k \theta_i x_i \in C$ holds. Assuming this is also true for k=n-1, then $\sum_{i=1}^n \theta_i x_i = (\sum_{i=1}^{n-1} \theta_i x_i) + \theta_n x_n$, 
+which is the sum of two elements of C which is in C by induction.
+
+\item BV Ex 2.2
+Show that a set is convex if and only if its intersection with any line is convex. Show that a set is affine if and only if its intersection with any line is affine.
+
+If C is a convex set, a line being affine is also convex and the intersection will be convex. 
+If the intersection of a set with a line is convex and non empty, any points of C will also be in the intersection therefore in C.
+The same applies to affine set since any affine set is convex.
+
+\item BV Ex 2.10
+Let $C \subseteq  \mathbf{R}^{n}$, the solution set of a quadratic inequality,
+$$ C =\{x \in  \mathbf{R}^{n} | x^T A x + b^T x + c \le 0 \}$$
+with $A \in  \mathbf{S}^{n}$,$b \in  \mathbf{R}^{n}$, and $c \in  \mathbf{R}$.
+\be
+	\item Show that C is convex if $A \succeq 0$
+	\item  Show that the intersection of C and the hyperplane defined by $g^T x + h = 0$ (where $g \neq 0$) is convex if $A + \lambda g g^T  \succeq 0$ for some $\lambda \in \mathbf{R}$.
+\ee
+Are  the converses of these statements true?
+
+
+source: math.stackexchange.com
+
+\be
+	\item rewriting $C$ as $C =\{x \in  \mathbf{R}^{n} | (x^T A x) + (b^T x) \le \alpha, \alpha \in   \mathbf{R} \}$.
+	Then the condition on x is the sum of two convex functions $x^T A x$ if $A \succeq 0$ and $b^T x$
+	and sublevels set of a function are convex (BV 3.1.6).
+	If $A=-1, b=0, c=-1$, $C=\{x \in  \mathbf{R}^{n} | \|x\|_2^2 \ge 1 \}$ is convex but A is not positive semi-definite so the converse is not true.
+	
+	%\item Using the result of BV Ex 2.2 we will show that the intersection of C with a line is convex when $A \succeq 0$.
+	
+	%Let $l= \{x + tv | t \in \mathbf{R} \}$ an arbitrary line, replacing any point of this line in $C \cap l$, we have:
+
+	%$$(x + tv)^T A (x + tv) + b^T (x + tv) + c = (v^T A v) t^2 + (2 x^T A v + b^T v) t + x^T A x + b^T x + c$$
+	
+	%$C \cap l = \{ x | \alpha t^2 + \beta t + \gamma \text{ where } \alpha = v^T A v, \beta = 2 x^T A v + b^T v \text{ and } \gamma = x^T A x + b^T x + c \le 0\}$.
+	%It is the equation of a parabola, which opens upward towards $+\infty$ when $\alpha > 0$ and the points solution are all the points for which the quadratic equation is negative or zero; it is a bounded interval and convex. 
+	%When $\alpha = 0$ the equation is $\beta t + \gamma$ which is affine and convex. And when 
+	%$\alpha < 0$ the parabola is open downward towards $-\infty$ and the solutions are the union of two disjoint intervals and is not convex.
+	%In conclusion, $C \cap l$ is convex when $\alpha =  v^T A v \ge 0$ thus C is convex when $A \succeq 0$.
+	
+	\item 
+\ee
+
+
+
+\item BV Ex 2.16
+
+Let $S_1$, $S_2$ two convex sets $\in \mathbf{R}^{m + n}$ and $S=\{ (x, y_1 + y_2) | x \in \mathbf{R}^{m}, y_1, y_2 \in \mathbf{R}^{n}, (x, y_1) \in S_1, (x, y_2) \in S_2 \}$.
+$\forall (x,y_1 + y_2) \in S, (x, z_1 + z_2) \in S, \forall \theta \in [0, 1]$, we have: $\theta (x, y_1 + y_2) + (1-\theta) (x, z_1 + z_2)  = (x, (\theta y_1 + (1-\theta) y_2) +  (\theta z_1 + (1-\theta) z_2))$ which is in the form
+$(x, t + s)$ where $x \in \mathbf{R}^{m}, t = (\theta y_1 + (1-\theta) y_2) \in S_1, s = (\theta z_1 + (1-\theta) z_2) \in S_2$ since $S_1$, $S_2$ are convex. Thus S is convex.
+
+\item BV Ex 2.23 Give an example of two closed convex sets that are disjoint but cannot be strictly separated.
+$S_1 = \{ x \in \mathbf{R}^{2}: x_1 > 0, x_2 \ge \frac{1}{x_1}\}$ and $S_2 = \{ x \in \mathbf{R}^{2}: x_2 = 0 \}$.
+ $S_1$ and $S_2$ are closed, convex, and disjoints. 
+ Any line of separating the two sets must be of the form $[0 1]^T x = \beta$ but $ [0 1]^T b = 0 $ for all $b\in S_2$, on the
+ other hand $\inf_{a \in S_1} [0 1]^T a = 0$, this implies there cannot be strict separation.
+ 
+%$\lim_{x\to0^+} \frac{1}{x} = +\infty$ thus it is impossible to separate the two sets $\{ (y | y = \frac{1}{x} , x > 0 \}$ and the y-axis.
+
+\item BV Ex 2.24 (b)  Supporting hyperplanes.\\
+Let $C=\{x \in \mathbf{R}^{n} | \| x \|_{\infty} \le 1\}$ and let $\hat{x}$ be a point in the boundary of C. Identify the supporting hyperplanes of C at $\hat{x}$ explicitly.
+
+By definition if C is supported at $\hat{x}$ iff $\exists v \in \mathbf{R}^{n}, v \neq 0$ such that $v^T. a \ge v ^T. \hat{x}$ for all $a \in C$. 
+If $ \|\hat{x}\| = 1$, and $\hat{x} =1$ then we take v = -1, 
+if $ \|\hat{x}\| = 1$, and $\hat{x} =-1$ then we take v = 1, and $ \|\hat{x}\| \le 1$, with  $-1 < \hat{x}  <1$ then we take v = 0.
+
+source:  https://pages.wustl.edu/files/pages/imce/nachbar/convexityrn.pdf
+
+\item Verify that as stated on BV p.39, the hyperbolic cone is the inverse image of the second order cone under the given affine transformation. 
+Let $C$, the hyperbolic cone: $C=\{x | x^T P x \le (c^T x)^2; c^t x \ge 0 \}$ where $P \in \SP$ and $c \in \mathbf{R}^{n}$, and 
+$S$, the second-order cone: $S=\{ (z,t) | z^T z \le t^2; t \ge 0 \}$.
+For any point $x$ of $C$, we want to show that under affine function $f(x) = (P^{\frac{1}{2}} x, c^T x)$, $C = \{x | f(x) \in S \}$.
+$(P^{\frac{1}{2}} x)^T (P^{\frac{1}{2}} x) = x^T (P^{\frac{1}{2}})^T P^{\frac{1}{2}} x = x^T P^{\frac{1}{2}} P^{\frac{1}{2}} x$ since $P$ is symmetric.
+So $C = \{x | \| P^{\frac{1}{2}} x \|_2^2 \le (c^T x)^2 \}$ or $C = \{(x, ct) | \| P^{\frac{1}{2}} x \|_2^2 \le (c^T x)^2,  (c^T x) \ge 0\}$, $C = \{(x, ct) | f(x) \in S \}$.
+\end{enumerate}
+
+\end{document}

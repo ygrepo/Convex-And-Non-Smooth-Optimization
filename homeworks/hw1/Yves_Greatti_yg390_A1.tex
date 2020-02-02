@@ -144,8 +144,8 @@ Given the quadratic cone C = \{(x,t) $\in \mathbf{R}^{n+1} | ||x||_2 \le t$ \}. 
 \item Prove (using the definition of convexity) that the intersection of two convex sets is convex. (See BV p.36) 
 Let C1, C2 two convex sets and $C3 = C1 \cap C2$. For any $x1, x2 \in C3$ and $\theta \in [0,1]$:
 \begin{align*}
-	\theta x1 + (1-\theta) x2 \in C1 \text{ since x1, x2 } \in C1 \\
-	\theta x1 + (1-\theta) x2 \in C2 \text{ since x1, x2 } \in C2 \\
+	\theta x1 + (1-\theta) x2 \in C1 \text{ since } x1, x2  \in C1 \\
+	\theta x1 + (1-\theta) x2 \in C2 \text{ since } x1, x2  \in C2 \\
 	\Rightarrow \theta x1 + (1-\theta) x2 \in C1 \cap C2 = C3
 \end{align*}
 C3 is convex.
@@ -197,24 +197,34 @@ Are  the converses of these statements true?
 source: math.stackexchange.com
 
 \be
-	\item rewriting $C$ as $C =\{x \in  \mathbf{R}^{n} | (x^T A x) + (b^T x) \le \alpha, \alpha \in   \mathbf{R} \}$.
+	\item 
+	rewriting $C$ as $C =\{x \in  \mathbf{R}^{n} | (x^T A x) + (b^T x) \le \alpha, \alpha \in   \mathbf{R} \}$.
 	Then the condition on x is the sum of two convex functions $x^T A x$ if $A \succeq 0$ and $b^T x$
 	and sublevels set of a function are convex (BV 3.1.6).
 	If $A=-1, b=0, c=-1$, $C=\{x \in  \mathbf{R}^{n} | \|x\|_2^2 \ge 1 \}$ is convex but A is not positive semi-definite so the converse is not true.
 	
-	%\item Using the result of BV Ex 2.2 we will show that the intersection of C with a line is convex when $A \succeq 0$.
+	\item First we show that the intersection of C with a line is convex when $A \succeq 0$.
 	
-	%Let $l= \{x + tv | t \in \mathbf{R} \}$ an arbitrary line, replacing any point of this line in $C \cap l$, we have:
+	Let $l= \{x + tv | t \in \mathbf{R} \}$ an arbitrary line, replacing any point of this line in $C \cap l$, we have:
 
-	%$$(x + tv)^T A (x + tv) + b^T (x + tv) + c = (v^T A v) t^2 + (2 x^T A v + b^T v) t + x^T A x + b^T x + c$$
+	$$(x + tv)^T A (x + tv) + b^T (x + tv) + c = (v^T A v) t^2 + (2 x^T A v + b^T v) t + x^T A x + b^T x + c$$
 	
-	%$C \cap l = \{ x | \alpha t^2 + \beta t + \gamma \text{ where } \alpha = v^T A v, \beta = 2 x^T A v + b^T v \text{ and } \gamma = x^T A x + b^T x + c \le 0\}$.
-	%It is the equation of a parabola, which opens upward towards $+\infty$ when $\alpha > 0$ and the points solution are all the points for which the quadratic equation is negative or zero; it is a bounded interval and convex. 
-	%When $\alpha = 0$ the equation is $\beta t + \gamma$ which is affine and convex. And when 
-	%$\alpha < 0$ the parabola is open downward towards $-\infty$ and the solutions are the union of two disjoint intervals and is not convex.
-	%In conclusion, $C \cap l$ is convex when $\alpha =  v^T A v \ge 0$ thus C is convex when $A \succeq 0$.
+	$C \cap l = \{ x | \alpha t^2 + \beta t + \gamma \le 0 \text{ where } \alpha = v^T A v, \beta = 2 x^T A v + b^T v \text{ and } \gamma = x^T A x + b^T x + c \}$.
+	It is the equation of a parabola, which opens upward towards $+\infty$ when $\alpha > 0$ and the points solution are all the points for which the quadratic equation is negative or zero; it is a bounded interval and convex. 
+	When $\alpha = 0$ the equation is $\beta t + \gamma$ which is affine and convex. And when 
+	$\alpha < 0$ the parabola is open downward towards $-\infty$ and the solutions are the union of two disjoint intervals and is not convex.
+	Thus $C \cap l$ is convex when $\alpha =  v^T A v \ge 0$ thus C is convex when $A \succeq 0$.
+	WLOG we now consider $C \cap l \cap H$, and notice:
+	\begin{align*}
+		g^T\; . \; (x + t \; v) + h	&=	0 \\
+		g^T \; v \; t				&= 0	\text{ since } g^T \; x + h = 0
+	\end{align*}
+	So we are looking for points in $I = C \cap l \cap H = \{ x |  \alpha t^2 + \beta t + \gamma \le 0, \epsilon t = 0, \text{ with the same as above } \alpha, \beta, \gamma, \epsilon=g^T \; v \}$.
+	If $t = 0$ then the intersection reduces to the point $\{ x \}$ assuming $\gamma \le 0$ or the empty set, in both cases the intersection is convex. if $g^T v = 0$ then the intersection is now 
+	$I =\{ x |  \alpha t^2 + \beta t + \gamma \le 0 \}$ and this is verified when $A \succeq 0$. Since $g g^T  \succeq 0$, we conclude that $I$ is convex if
+	$A  \succeq 0  \Rightarrow (A + \lambda g g^T) \succeq 0, \lambda \ge 0$. The converse is not verified for the same counter-example as (a).
 	
-	\item 
+
 \ee
 
 

@@ -1,0 +1,146 @@
+\documentclass[10pt]{article}
+
+
+\usepackage{times}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[psamsfonts]{amssymb}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{graphics}
+\usepackage{enumerate}
+\usepackage{amstext}
+\usepackage{blkarray}
+\usepackage{url}
+\usepackage{epsfig}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+\usepackage{mathtools}
+ 
+\def\Kset{\mathbb{K}}
+\def\Nset{\mathbb{N}}
+\def\Qset{\mathbb{Q}}
+\def\Rset{\mathbb{R}}
+\def\Sset{\mathbb{S}}
+\def\Zset{\mathbb{Z}}
+\def\squareforqed{\hbox{\rlap{$\sqcap$}$\sqcup$}}
+\def\qed{\ifmmode\squareforqed\else{\unskip\nobreak\hfil
+\penalty50\hskip1em\null\nobreak\hfil\squareforqed
+\parfillskip=0pt\finalhyphendemerits=0\endgraf}\fi}
+
+\DeclareMathOperator*{\E}{\rm E}
+\DeclareMathOperator*{\argmax}{\rm argmax}
+\DeclareMathOperator*{\argmin}{\rm argmin}
+\DeclareMathOperator{\sgn}{sign}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\last}{last}
+\DeclareMathOperator{\sign}{\sgn}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\def\vcdim{\textnormal{VCdim}}
+\DeclareMathOperator*{\B}{\textbf{B}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand{\cX}{{\mathcal X}}
+\newcommand{\cY}{{\mathcal Y}}
+\newcommand{\cA}{{\mathcal A}}
+\newcommand{\ignore}[1]{}
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bd}{\begin{description}}
+\newcommand{\ed}{\end{description}}
+\newcommand{\h}{\widehat}
+\newcommand{\e}{\epsilon}
+\newcommand{\mat}[1]{{\mathbf #1}}
+\newcommand{\R}{\mat{R}}
+\newcommand{\0}{\mat{0}}
+\newcommand{\M}{\mat{M}}
+
+\newcommand{\SP}{\mathbf{S}_{+}^n}
+
+\newcommand{\D}{\mat{D}}
+\renewcommand{\r}{\mat{r}}
+\newcommand{\x}{\mat{x}}
+\renewcommand{\u}{\mat{u}}
+\renewcommand{\v}{\mat{v}}
+\newcommand{\w}{\mat{w}}
+\renewcommand{\H}{\text{0}}
+\newcommand{\T}{\text{1}}
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\xxi}{{\boldsymbol \xi}}
+\newcommand{\ssigma}{{\boldsymbol \sigma}}
+\newcommand{\Alpha}{{\boldsymbol \alpha}}
+\newcommand{\tts}{\tt \small}
+\newcommand{\hint}{\emph{hint}}
+\newcommand{\matr}[1]{\bm{#1}}     % ISO complying version
+\newcommand{\vect}[1]{\bm{#1}}     % ISO complying version
+
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+
+% New commands
+\newcommand{\dom}{\textbf{dom}}
+\newcommand{\epi}{\textbf{epi}}
+
+\newenvironment{solution}{\vspace{.25cm}\noindent{\it Solution:}}{}
+
+\begin{document}
+
+\noindent MATH-GA.2012.001 Selected Topics in Numerical Analysis :\\
+Convex and Nonsmooth Optimization, Spring 2020\\
+Homework Assignment 2 \\
+Yves Greatti - yg390\\
+
+\begin{enumerate}
+
+\item Prove that a function is convex if and only if its epigraph is a convex set. 
+Suppose $f$ is a convex function, $f: \mathbf{R}^n \rightarrow \mathbf{R}$ then $\forall (x, t_1),(y, t_2) \in \epi f$, and $\forall  \theta \in [0, 1]$,
+we want to show that $\theta (x, t_1) + (1-\theta) (y, t_2)$ is in $\epi f$.
+we have:
+\begin{align*}
+	f(\theta x + (1-\theta) y)	&\le	\theta f(x) + (1 - \theta) f(y) \\
+						&\le	\theta t_1 + (1 - \theta) t_2
+\end{align*} thus $\epi f$ is convex. The other direction is similar  $\forall (x, t_1),(y, t_2) \in \epi f$, $\epi f$ is a convex set, and $\forall  \theta \in [0, 1]$:
+Let $t_1 = f(x)$, $t_2 = f(y)$ thus $\theta (x, t_1) + (1-\theta) (y, t_2) = (\theta x + (1-\theta) y, \theta t_1 + (1-\theta) t_2)$ is in $\epi f$ which implies: 
+$f(\theta x + (1-\theta) y) \le \theta t_1 + (1-\theta) t_2 \Rightarrow$  $f(\theta x + (1-\theta) y) \le \theta f(x) + (1-\theta) f(y) \Rightarrow f$ is convex.
+
+\item BV Ex. 2.31 Properties of dual cones. Let $K^*$ be the dual cone of a convex cone K. Prove the following.
+	\be 
+		\item $K^*$  is indeed a convex cone.
+		$\forall y_1, y_2  \in K^*, \theta_1, \theta_2 \ge 0$, and $\forall x \in K$, 
+		$x^T (\theta_1 y_1 + \theta_2 y_2) = \theta_1 x^T y_1 + \theta_2 x^T y_2 \ge 0$ thus $K^*$ is a convex cone.
+		
+		\item $K_1 \subseteq K_2$ implies $K_2^* \subseteq K_1^*$.
+		Suppose $y \in K_2^*$, $\forall x \in K_1$, $x^T y \ge 0$, and since $x \in K_2$ also, then $y \in K_1^*$ and $K_2^* \subseteq K_1^*$.
+	\ee
+	
+\item BV Ex. 233 Find the dual cone of $\{ A \; x | x \ge 0 \}$, where $A \in \mathbf{R}^{m \times n}$. 
+The dual of $K = \{ A \; x | x \ge 0 \}$ is $K^* = \{ y | (A x)^T y \ge 0, \forall x \ge 0 \}$ or $K^* = \{ y | x^T (A^T y) \ge 0,  x \ge 0 \} = \{ y | (A^T y)^T x \ge 0, x \ge 0 \}$. 
+Given $u = A^T y$, we are looking for vectors $u$ such that the inner product is non-negative for any $x \ge 0$.
+Let $\{e_1, \cdots  ,e_n\}$ the canonical basis for $\mathbf{R}^n$, for any vector $u = A^T y, y \in K^*$, we have $u^T e_i \ge 0 \Rightarrow u_i \ge 0, i \in [1,n]$.
+Thus $K^* = \{ y | A^T y \ge 0, x \ge 0\}$, this is sufficient as if $ x\ge 0$ then $x^T  A^T y \ge 0$.
+	
+\item Show that the second-order cone defined on p.31 of BV is self-dual, that is, it satisfies $K^* = K$.
+Let C the second-order cone, $C=\{(x, t) \in  \mathbf{R}^n | \| x \|_2 \le t \}$. $C^* = \{(y,s) | \begin{bmatrix} x \\ t  \end{bmatrix}^T \begin{bmatrix} y \\ s  \end{bmatrix} \ge 0, \forall (x,t) \in C\}$.
+if $(y, s) \in C$ then $x^T y \le \| x \|_2 \| y \|_2$ using Cauchy-Schwarz or  $x^T y \le t \; s$. 
+$\begin{bmatrix} x \\ t  \end{bmatrix}^T \begin{bmatrix} y \\ s  \end{bmatrix}  = x^T y + ts$, and by the triangle inequality, $\|x^T y + ts\|  \ge t \; s - | x^T y | \ge 0 \Rightarrow y \in C^*$.
+Suppose $(y, s) \notin C$, then $\| y \|_2 > s$ and let m the index of the largest component of $y$, 
+thus $\| y \|_2 = (\sum_{i=1,n} y_i^2)^{\frac{1}{2}} \le (n^2 |y_m|^2)^{\frac{1}{2}} = n |y_m| \Rightarrow $. WLOG $| y_m | = y_m$, then $y_m > \frac{n} {s^2}$
+and let $x$ the vector with the only component non-zero $x_m = - \frac{n} {s^2}$ then $x^T y = - \frac{n} {s^2} \; y_m \le - 1$ so $y \notin C^*$.
+In conclusion, $C = C^*$, C is self-dual.
+ 
+
+ 
+\end{enumerate}
+
+\end{document}

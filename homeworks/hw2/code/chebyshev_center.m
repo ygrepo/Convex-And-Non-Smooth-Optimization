@@ -7,7 +7,7 @@ function [x_sol, r_sol] = chebyshev_center(A, b)
 
 % Generate the data
 % randn('state',0);
-% n = 10; m = 2*n;
+% n = 2; m = 2*n;
 % A = randn(m,n);
 % b = A*rand(n,1) + 2*rand(m,1);
 % b = ones(4,1);
@@ -53,5 +53,8 @@ text(x_c(1), x_c(2), "\leftarrow  center")
 axis([-1 1 -1 1])
 axis equal
 hold off
+txt = "chebyshev_center_" + num2str(n);
+saveas(gcf,txt,'epsc')
+%saveas(gcf,txt,'png')
 
 

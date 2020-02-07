@@ -142,14 +142,214 @@ thus $\| y \|_2 = (\sum_{i=1,n} y_i^2)^{\frac{1}{2}} \le (n^2 |y_m|^2)^{\frac{1}
 and let $x$ the vector with the only component non-zero $x_m = - \frac{n} {s^2}$ then $x^T y = - \frac{n} {s^2} \; y_m \le - 1$ so $y \notin C^*$.
 In conclusion, $C = C^*$, C is self-dual.
  
-\begin{minted}{python}
+\item  "Chebyshev center" problem
 
-    def __init__(self, x, y): 
-        self.x=x
-        self.y=y
+\begin{enumerate}
+\item function  chebyshev\_center(A, b) takes a matrix $A$ of dimension $(2,n)$ and a vector $b(n)$ to find the  largest Euclidean ball
+that lies in a polyhedron described by $n$ linear inequalities.
+ 
+\begin{minted}{matlab}
+
+% Compute the Chebyshev center of a polyhedron
+% Boyd & Vandenberghe "Convex Optimization"
+function [x_sol, r_sol] = chebyshev_center(A, b)
+% The goal is to find the largest Euclidean ball (i.e. its center and
+% radius) that lies in a polyhedron described by linear inequalites in this
+% fashion: P = {x : a_i'*x <= b_i, i=1,...,m}
+
+% Generate the data
+[~,n]=size(A);
+
+% Build and execute model
+fprintf(1,'Computing Chebyshev center...');
+cvx_begin
+    variable r(1)
+    variable x_c(2)
+    maximize ( r )
+    for k=1:n
+        A(:, k)'*x_c + r*norm(A(:, k),2) <= b(k);
+    end
+cvx_end
+fprintf(1,'Done! \n');
+x_sol = x_c;
+r_sol = r;
+
+% Display results
+fprintf(1,'The Chebyshev center coordinates are: \n');
+disp(x_c);
+fprintf(1,'The radius of the largest Euclidean ball is: \n');
+disp(r);
+
+% Generate the figure
+x = linspace(-2,2);
+for k=1:n
+    plot(x, -x * A(1,k)./A(2,k) + b(k)./A(2,k),"b-");
+    hold on
+end
+theta = 0:pi/100:2*pi;
+plot( x_c(1) + r*cos(theta), x_c(2) + r*sin(theta), "r" );
+plot(x_c(1),x_c(2),'b*');
+xlabel("x_1")
+ylabel("x_2")
+
+txt = "# inequalities:" + num2str(n);
+title({"Largest Euclidean ball lying in a 2D polyhedron", txt});
+text(x_c(1), x_c(2), "\leftarrow  center")
+axis([-1 1 -1 1])
+axis equal
+hold off
+txt = "chebyshev_center_" + num2str(n);
+saveas(gcf,txt,'epsc')
 
 \end{minted}
- 
+
+For the same example on the web page where matrix $A=\begin{bmatrix} 2 &  2  & -1 & -1\\ 1 & -1 & 2  & -2 \end{bmatrix}$ and vector $b=\begin{bmatrix} 1\\ 1 \\ 1 \\ 1 \end{bmatrix}$,
+we obtain the same circle which is tangent to the four hyperplanes $a_i^T x = b_i$ (see figure ~\ref{fig1}):
+\begin{figure}[H]
+	\centering
+	%\includegraphics[width=1\linewidth]{figures/chebyshev_center_4} 
+	\includegraphics[width=200pt]{figures/chebyshev_center_4}
+	\caption{Sample example}
+	\label{fig1}
+\end{figure}
+     
+
+We solve the same optimization problem with more inequalities and an interior center inside the polyhedron (see figure ~\ref{fig2}):
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=200pt]{figures/chebyshev_center_20}
+	\caption{Example with 20 inequalities}
+	\label{fig2}
+\end{figure}
+
+\item If we choose A and b such that the hyperplanes intersect at the same point then we CVX finds a center with radius zero.
+
+\item The problem to solve now is to find the largest "scaled unit ball" $\mathcal{B} = \{x_c + u | \| u \|_p \le r \}$ that lies in the polyhedron described by a set of linear inequalities:
+$\mathcal{P} = \{x \in \mathbf{R}^n | a_i^T x \le b_i, i=1, \cdots, m \}$. For any point of $\mathcal{B}$ lying in one halfspace $a_i^T x \le b_i$, similarly to the euclidean space, 
+we have $\| u \|_p \le r \Rightarrow a_i^T x_c +  r \| a_i \|_p  \le b_i$ since $g_i = \sup{\{a_i^T u | \| u \|_p \le r \}} = r \|a_i\|_p$. And the Chebyshev center can be determined by solving the problem:
+\begin{align*}
+	\text{ maximize } &  r\\
+	\text{subject to }  & a_i^T x_c +  r \| a_i \|_p  \le b_i,  i=1, \cdots, m
+\end{align*}
+This is still an LP problem since the inequalities are still linear.
+We obtain different solutions for the same matrix $A$ and vector $b$, corresponding to different p-norm, $p=1$ is the diamond shape ball (fig.  ~\ref{fig3}),
+for $p=1.5$  the ball has a shape between the diamond and the circle $p=2$ (fig. ~\ref{fig4}), and as we increase $p$, for $p=\infty$ the ball becomes a square 
+(where either $\|x_1\| =1 \text{ and } \| x_2 \| \le 1 \text{ or } \| x_2 \| \le 1 \text{ and } \| x_ 2|| = 1$,  (fig. ~\ref{fig5})).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=200pt]{figures/chebyshev_center_norm_1}
+	\caption{"Scaled" unit ball for p=1}
+	\label{fig3}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=200pt]{figures/chebyshev_center_norm_15}
+	\caption{"Scaled" unit ball for p=1.5}
+	\label{fig4}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=200pt]{figures/chebyshev_center_norm_Inf}
+	\caption{"Scaled" unit ball for p=$\infty$}
+	\label{fig5}
+\end{figure}
+
+\begin{minted}{matlab}
+
+% Compute the Chebyshev center of a polyhedron
+function [x_sol, r_sol, x, y] = chebyshev_center_with_norm(A, b, p)
+% The goal is to find the largest Euclidean ball (i.e. its center and
+% radius) that lies in a polyhedron described by linear inequalites in this
+% fashion: P = {x : a_i'*x <= b_i, i=1,...,m}
+
+rng('default')
+format long g
+[~,n]=size(A);
+
+% Build and execute model
+fprintf(1,'Computing Chebyshev center...');
+cvx_begin
+    variable r(1)
+    variable x_c(2)
+    maximize ( r )
+    for k=1:n
+        A(:, k)' * x_c + r * norm(A(:, k), p) <= b(k);
+    end
+cvx_end
+fprintf(1,'Done! \n');
+x_sol = x_c;
+r_sol = r;
+
+
+% Display results
+fprintf(1,"The Chebyshev center coordinates are: \n");
+disp(x_c);
+txt = "Radius of largest 'scaled unit ball' using norm p:" + num2str(p) + "\n";
+fprintf(1,txt);
+disp(r);
+
+% Generate the figure
+x = linspace(-2,2);
+for k=1:n
+    plot(x, -x * A(1,k)./A(2,k) + b(k)./A(2,k),"b-");
+    hold on
+end
+
+n_vecs = 100;
+[x, y] = gen_random_vectors(n_vecs, p);
+x = x.* r + x_c(1);
+y = y.* r + x_c(2);
+
+for i=1:n_vecs
+    plot(x(i), y(i), "r." );
+    hold on
+end
+plot(x_c(1),x_c(2),'b*');
+xlabel("x-axis")
+ylabel("y-axis")
+
+txt1 = "# inequalities:" + num2str(n);
+tx2 = "norm-p:" + num2str(p);
+title({"Largest 'scaled unit ball' lying in a 2D polyhedron", txt1, tx2});
+text(x_c(1), x_c(2), "\leftarrow  center")
+axis([-1 1 -1 1])
+axis equal
+hold off
+txt = "chebyshev_center_norm_" + num2str(p);
+saveas(gcf,txt,'epsc')
+
+function [x, y] = gen_random_vectors(n, p)
+    r = randn(n, 2); % Use a large n
+    for i=1:n
+        norm_r = norm(r(i,:), p);
+        r(i, :) = r(i, :) ./ norm_r;
+    end
+    x = r(:, 1);
+    y = r(:, 2);
+    
+\end{minted}
+
+\item As we decrease $p$, the norm of $a_i$ grows exponentially (as shown in figure ~\ref{fig6}), thus CVX, to solve the problem, quickly finds that the solution for the center is the intersection of the hyperplanes and for $r$ to be zero.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=200pt]{figures/p_norm_trend}
+	\caption{p-norms of three random vectors }
+	\label{fig6}
+\end{figure}
+
+%which is equivalent of solving the problem:
+%\begin{align*}
+%	\text{ maximize } &  r\\
+%	\text{subject to }  &g_i(x, r) \le 0,  i=1, \cdots, m
+%\end{align*}
+%where $g_i(x, r) = \sup_{\|u\|_p \le r}{\{  a_i^T x_c + r \|a_i\|_p - b_i \}}$.
+% This a convex optimization problem, since each function $g_i$ is the pointwise maximum of a family of convex functions of x and r, hence convex.
+
+
+\end{enumerate}
+
 \end{enumerate}
 
 \end{document}

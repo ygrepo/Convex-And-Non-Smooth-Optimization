@@ -1,0 +1,72 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} Compute the Chebyshev center of a polyhedron}
+\PYG{k}{function}\PYG{+w}{ }[x\PYGZus{}sol, r\PYGZus{}sol, x, y] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{chebyshev\PYGZus{}center\PYGZus{}with\PYGZus{}norm}\PYG{p}{(}A, b, p\PYG{p}{)}
+\PYG{c}{\PYGZpc{} The goal is to find the largest Euclidean ball (i.e. its center and}
+\PYG{c}{\PYGZpc{} radius) that lies in a polyhedron described by linear inequalites in this}
+\PYG{c}{\PYGZpc{} fashion: P = \PYGZob{}x : a\PYGZus{}i\PYGZsq{}*x \PYGZlt{}= b\PYGZus{}i, i=1,...,m\PYGZcb{}}
+
+\PYG{n}{rng}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}default\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{format} \PYG{n}{long} \PYG{n}{g}
+\PYG{p}{[}\PYG{o}{\PYGZti{}}\PYG{p}{,}\PYG{n}{n}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Build and execute model}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Computing Chebyshev center...\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{cvx\PYGZus{}begin}
+    \PYG{n}{variable} \PYG{n}{r}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{n}{variable} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+    \PYG{n}{maximize} \PYG{p}{(} \PYG{n}{r} \PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+        \PYG{n}{A}\PYG{p}{(:,} \PYG{n}{k}\PYG{p}{)}\PYG{o}{\PYGZsq{}} \PYG{o}{*} \PYG{n}{x\PYGZus{}c} \PYG{o}{+} \PYG{n}{r} \PYG{o}{*} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{A}\PYG{p}{(:,} \PYG{n}{k}\PYG{p}{),} \PYG{n}{p}\PYG{p}{)} \PYG{o}{\PYGZlt{}}\PYG{p}{=} \PYG{n}{b}\PYG{p}{(}\PYG{n}{k}\PYG{p}{);}
+    \PYG{k}{end}
+\PYG{n}{cvx\PYGZus{}end}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Done! \PYGZbs{}n\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{x\PYGZus{}sol} \PYG{p}{=} \PYG{n}{x\PYGZus{}c}\PYG{p}{;}
+\PYG{n}{r\PYGZus{}sol} \PYG{p}{=} \PYG{n}{r}\PYG{p}{;}
+
+
+\PYG{c}{\PYGZpc{} Display results}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYGZdq{}\PYG{n}{The} \PYG{n}{Chebyshev} \PYG{n}{center} \PYG{n}{coordinates} \PYG{n}{are}\PYG{p}{:} \PYG{o}{\PYGZbs{}}\PYG{n}{n}\PYGZdq{}\PYG{p}{);}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{);}
+\PYG{n}{txt} \PYG{p}{=} \PYGZdq{}\PYG{n}{Radius} \PYG{n}{of} \PYG{n}{largest} \PYG{l+s}{\PYGZsq{}scaled unit ball\PYGZsq{}} \PYG{n}{using} \PYG{n}{norm} \PYG{n}{p}\PYG{p}{:}\PYGZdq{} \PYG{o}{+} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{p}\PYG{p}{)} \PYG{o}{+} \PYGZdq{}\PYG{o}{\PYGZbs{}}\PYG{n}{n}\PYGZdq{}\PYG{p}{;}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{txt}\PYG{p}{);}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{r}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Generate the figure}
+\PYG{n}{x} \PYG{p}{=} \PYG{n+nb}{linspace}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n}{x} \PYG{o}{*} \PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{o}{./}\PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)} \PYG{o}{+} \PYG{n}{b}\PYG{p}{(}\PYG{n}{k}\PYG{p}{)}\PYG{o}{./}\PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{k}\PYG{p}{),}\PYGZdq{}\PYG{n}{b}\PYG{o}{\PYGZhy{}}\PYGZdq{}\PYG{p}{);}
+    \PYG{n}{hold} \PYG{n}{on}
+\PYG{k}{end}
+
+\PYG{n}{n\PYGZus{}vecs} \PYG{p}{=} \PYG{l+m+mi}{100}\PYG{p}{;}
+\PYG{p}{[}\PYG{n}{x}\PYG{p}{,} \PYG{n}{y}\PYG{p}{]} \PYG{p}{=} \PYG{n}{gen\PYGZus{}random\PYGZus{}vectors}\PYG{p}{(}\PYG{n}{n\PYGZus{}vecs}\PYG{p}{,} \PYG{n}{p}\PYG{p}{);}
+\PYG{n}{x} \PYG{p}{=} \PYG{n}{x}\PYG{o}{.*} \PYG{n}{r} \PYG{o}{+} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{n}{y} \PYG{p}{=} \PYG{n}{y}\PYG{o}{.*} \PYG{n}{r} \PYG{o}{+} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{);}
+
+\PYG{k}{for} \PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n\PYGZus{}vecs}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{),} \PYG{n}{y}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{),} \PYGZdq{}\PYG{n}{r}\PYG{p}{.}\PYGZdq{} \PYG{p}{);}
+    \PYG{n}{hold} \PYG{n}{on}
+\PYG{k}{end}
+\PYG{n}{plot}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}b*\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{xlabel}\PYG{p}{(}\PYGZdq{}\PYG{n}{x}\PYG{o}{\PYGZhy{}}\PYG{n}{axis}\PYGZdq{}\PYG{p}{)}
+\PYG{n}{ylabel}\PYG{p}{(}\PYGZdq{}\PYG{n}{y}\PYG{o}{\PYGZhy{}}\PYG{n}{axis}\PYGZdq{}\PYG{p}{)}
+
+\PYG{n}{txt1} \PYG{p}{=} \PYGZdq{}\PYGZsh{} \PYG{n}{inequalities}\PYG{p}{:}\PYGZdq{} \PYG{o}{+} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{n}{tx2} \PYG{p}{=} \PYGZdq{}\PYG{n}{norm}\PYG{o}{\PYGZhy{}}\PYG{n}{p}\PYG{p}{:}\PYGZdq{} \PYG{o}{+} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{p}\PYG{p}{);}
+\PYG{n}{title}\PYG{p}{(\PYGZob{}}\PYGZdq{}\PYG{n}{Largest} \PYG{l+s}{\PYGZsq{}scaled unit ball\PYGZsq{}} \PYG{n}{lying} \PYG{n}{in} \PYG{n}{a} \PYG{l+m+mi}{2}\PYG{n}{D} \PYG{n}{polyhedron}\PYGZdq{}\PYG{p}{,} \PYG{n}{txt1}\PYG{p}{,} \PYG{n}{tx2}\PYG{p}{\PYGZcb{});}
+\PYG{n}{text}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),} \PYGZdq{}\PYG{o}{\PYGZbs{}}\PYG{n}{leftarrow}  \PYG{n}{center}\PYGZdq{}\PYG{p}{)}
+\PYG{n}{axis}\PYG{p}{([}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{axis} \PYG{n}{equal}
+\PYG{n}{hold} \PYG{n}{off}
+\PYG{n}{txt} \PYG{p}{=} \PYGZdq{}\PYG{n}{chebyshev\PYGZus{}center\PYGZus{}norm\PYGZus{}}\PYGZdq{} \PYG{o}{+} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{p}\PYG{p}{);}
+\PYG{n}{saveas}\PYG{p}{(}\PYG{n}{gcf}\PYG{p}{,}\PYG{n}{txt}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}epsc\PYGZsq{}}\PYG{p}{)}
+
+\PYG{k}{function}\PYG{+w}{ }[x, y] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{gen\PYGZus{}random\PYGZus{}vectors}\PYG{p}{(}n, p\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{r} \PYG{p}{=} \PYG{n+nb}{randn}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{2}\PYG{p}{);} \PYG{c}{\PYGZpc{} Use a large n}
+    \PYG{k}{for} \PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+        \PYG{n}{norm\PYGZus{}r} \PYG{p}{=} \PYG{n}{norm}\PYG{p}{(}\PYG{n}{r}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,:),} \PYG{n}{p}\PYG{p}{);}
+        \PYG{n}{r}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,} \PYG{p}{:)} \PYG{p}{=} \PYG{n}{r}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,} \PYG{p}{:)} \PYG{o}{./} \PYG{n}{norm\PYGZus{}r}\PYG{p}{;}
+    \PYG{k}{end}
+    \PYG{n}{x} \PYG{p}{=} \PYG{n}{r}\PYG{p}{(:,} \PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{n}{y} \PYG{p}{=} \PYG{n}{r}\PYG{p}{(:,} \PYG{l+m+mi}{2}\PYG{p}{);}
+\end{Verbatim}

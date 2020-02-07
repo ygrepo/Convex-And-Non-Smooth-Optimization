@@ -57,7 +57,8 @@ text(x_c(1), x_c(2), "\leftarrow  center")
 axis([-1 1 -1 1])
 axis equal
 hold off
-
+txt = "chebyshev_center_norm_" + num2str(p);
+saveas(gcf,txt,'epsc')
 
 function [x, y] = gen_random_vectors(n, p)
     r = randn(n, 2); % Use a large n

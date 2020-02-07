@@ -1,0 +1,57 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} Compute the Chebyshev center of a polyhedron}
+\PYG{c}{\PYGZpc{} Boyd \PYGZam{} Vandenberghe \PYGZdq{}Convex Optimization\PYGZdq{}}
+\PYG{k}{function}\PYG{+w}{ }[x\PYGZus{}sol, r\PYGZus{}sol] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{chebyshev\PYGZus{}center}\PYG{p}{(}A, b\PYG{p}{)}
+\PYG{c}{\PYGZpc{} The goal is to find the largest Euclidean ball (i.e. its center and}
+\PYG{c}{\PYGZpc{} radius) that lies in a polyhedron described by linear inequalites in this}
+\PYG{c}{\PYGZpc{} fashion: P = \PYGZob{}x : a\PYGZus{}i\PYGZsq{}*x \PYGZlt{}= b\PYGZus{}i, i=1,...,m\PYGZcb{}}
+
+\PYG{c}{\PYGZpc{} Generate the data}
+\PYG{c}{\PYGZpc{} randn(\PYGZsq{}state\PYGZsq{},0);}
+\PYG{c}{\PYGZpc{} n = 10; m = 2*n;}
+\PYG{c}{\PYGZpc{} A = randn(m,n);}
+\PYG{c}{\PYGZpc{} b = A*rand(n,1) + 2*rand(m,1);}
+\PYG{c}{\PYGZpc{} b = ones(4,1);}
+\PYG{c}{\PYGZpc{} A = [2 2 \PYGZhy{}1 \PYGZhy{}1; 1 \PYGZhy{}1 2 \PYGZhy{}2];}
+
+\PYG{p}{[}\PYG{o}{\PYGZti{}}\PYG{p}{,}\PYG{n}{n}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Build and execute model}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Computing Chebyshev center...\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{cvx\PYGZus{}begin}
+    \PYG{n}{variable} \PYG{n}{r}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)}
+    \PYG{n}{variable} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)}
+    \PYG{n}{maximize} \PYG{p}{(} \PYG{n}{r} \PYG{p}{)}
+    \PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+        \PYG{n}{A}\PYG{p}{(:,} \PYG{n}{k}\PYG{p}{)}\PYG{o}{\PYGZsq{}*}\PYG{n}{x\PYGZus{}c} \PYG{o}{+} \PYG{n}{r}\PYG{o}{*}\PYG{n}{norm}\PYG{p}{(}\PYG{n}{A}\PYG{p}{(:,} \PYG{n}{k}\PYG{p}{),}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{\PYGZlt{}}\PYG{p}{=} \PYG{n}{b}\PYG{p}{(}\PYG{n}{k}\PYG{p}{);}
+    \PYG{k}{end}
+\PYG{n}{cvx\PYGZus{}end}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}Done! \PYGZbs{}n\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{x\PYGZus{}sol} \PYG{p}{=} \PYG{n}{x\PYGZus{}c}\PYG{p}{;}
+\PYG{n}{r\PYGZus{}sol} \PYG{p}{=} \PYG{n}{r}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} Display results}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}The Chebyshev center coordinates are: \PYGZbs{}n\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{l+s}{\PYGZsq{}The radius of the largest Euclidean ball is: \PYGZbs{}n\PYGZsq{}}\PYG{p}{);}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{r}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Generate the figure}
+\PYG{n}{x} \PYG{p}{=} \PYG{n+nb}{linspace}\PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{k}{for} \PYG{n}{k}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+    \PYG{n}{plot}\PYG{p}{(}\PYG{n}{x}\PYG{p}{,} \PYG{o}{\PYGZhy{}}\PYG{n}{x} \PYG{o}{*} \PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)}\PYG{o}{./}\PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{k}\PYG{p}{)} \PYG{o}{+} \PYG{n}{b}\PYG{p}{(}\PYG{n}{k}\PYG{p}{)}\PYG{o}{./}\PYG{n}{A}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n}{k}\PYG{p}{),}\PYGZdq{}\PYG{n}{b}\PYG{o}{\PYGZhy{}}\PYGZdq{}\PYG{p}{);}
+    \PYG{n}{hold} \PYG{n}{on}
+\PYG{k}{end}
+\PYG{n}{theta} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{:}\PYG{n+nb}{pi}\PYG{o}{/}\PYG{l+m+mi}{100}\PYG{p}{:}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n+nb}{pi}\PYG{p}{;}
+\PYG{n}{plot}\PYG{p}{(} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{+} \PYG{n}{r}\PYG{o}{*}\PYG{n+nb}{cos}\PYG{p}{(}\PYG{n}{theta}\PYG{p}{),} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{)} \PYG{o}{+} \PYG{n}{r}\PYG{o}{*}\PYG{n+nb}{sin}\PYG{p}{(}\PYG{n}{theta}\PYG{p}{),} \PYGZdq{}\PYG{n}{r}\PYGZdq{} \PYG{p}{);}
+\PYG{n}{plot}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),}\PYG{l+s}{\PYGZsq{}b*\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{xlabel}\PYG{p}{(}\PYGZdq{}\PYG{n}{x\PYGZus{}1}\PYGZdq{}\PYG{p}{)}
+\PYG{n}{ylabel}\PYG{p}{(}\PYGZdq{}\PYG{n}{x\PYGZus{}2}\PYGZdq{}\PYG{p}{)}
+
+\PYG{n}{txt} \PYG{p}{=} \PYGZdq{}\PYGZsh{} \PYG{n}{inequalities}\PYG{p}{:}\PYGZdq{} \PYG{o}{+} \PYG{n}{num2str}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{n}{title}\PYG{p}{(\PYGZob{}}\PYGZdq{}\PYG{n}{Largest} \PYG{n}{Euclidean} \PYG{n}{ball} \PYG{n}{lying} \PYG{n}{in} \PYG{n}{a} \PYG{l+m+mi}{2}\PYG{n}{D} \PYG{n}{polyhedron}\PYGZdq{}\PYG{p}{,} \PYG{n}{txt}\PYG{p}{\PYGZcb{});}
+\PYG{n}{text}\PYG{p}{(}\PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{),} \PYG{n}{x\PYGZus{}c}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{p}{),} \PYGZdq{}\PYG{o}{\PYGZbs{}}\PYG{n}{leftarrow}  \PYG{n}{center}\PYGZdq{}\PYG{p}{)}
+\PYG{n}{axis}\PYG{p}{([}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{l+m+mi}{1} \PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1} \PYG{l+m+mi}{1}\PYG{p}{])}
+\PYG{n}{axis} \PYG{n}{equal}
+\PYG{n}{hold} \PYG{n}{off}
+\end{Verbatim}

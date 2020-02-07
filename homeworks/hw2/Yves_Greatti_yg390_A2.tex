@@ -22,6 +22,7 @@
     urlcolor=blue,
 }
 \usepackage{mathtools}
+\usepackage{minted}
  
 \def\Kset{\mathbb{K}}
 \def\Nset{\mathbb{N}}
@@ -124,6 +125,8 @@ $f(\theta x + (1-\theta) y) \le \theta t_1 + (1-\theta) t_2 \Rightarrow$  $f(\th
 		Suppose $y \in K_2^*$, $\forall x \in K_1$, $x^T y \ge 0$, and since $x \in K_2$ also, then $y \in K_1^*$ and $K_2^* \subseteq K_1^*$.
 	\ee
 	
+\item Show that if a convex cone K is closed, then $(K^*)^*$, the dual cone of the dual cone of K, is equal to K.
+
 \item BV Ex. 233 Find the dual cone of $\{ A \; x | x \ge 0 \}$, where $A \in \mathbf{R}^{m \times n}$. 
 The dual of $K = \{ A \; x | x \ge 0 \}$ is $K^* = \{ y | (A x)^T y \ge 0, \forall x \ge 0 \}$ or $K^* = \{ y | x^T (A^T y) \ge 0,  x \ge 0 \} = \{ y | (A^T y)^T x \ge 0, x \ge 0 \}$. 
 Given $u = A^T y$, we are looking for vectors $u$ such that the inner product is non-negative for any $x \ge 0$.
@@ -139,7 +142,13 @@ thus $\| y \|_2 = (\sum_{i=1,n} y_i^2)^{\frac{1}{2}} \le (n^2 |y_m|^2)^{\frac{1}
 and let $x$ the vector with the only component non-zero $x_m = - \frac{n} {s^2}$ then $x^T y = - \frac{n} {s^2} \; y_m \le - 1$ so $y \notin C^*$.
 In conclusion, $C = C^*$, C is self-dual.
  
+\begin{minted}{python}
 
+    def __init__(self, x, y): 
+        self.x=x
+        self.y=y
+
+\end{minted}
  
 \end{enumerate}
 

@@ -1,0 +1,19 @@
+function [x, y] = gen_random_vectors(n, p)
+    x = linspace(-2,2);
+    nx = norm(x,p);
+    y = normpdf(x);
+    y = y ./ 
+%  rng('default')
+%  r = randn(2,n); % Use a large n
+%  r = bsxfun(@rdivide,r,(sum(r.^p,1))).^(1/p);
+%  x = r(1,:);
+%  y = r(2,:);
+   
+%  vecs = normrnd(0,1,[n, 2]);
+%  norm_vecs = zeros(n, 2);
+%  for i=1:n
+%      %disp(vecs(i))
+%      %disp(norm(vecs(i),p))
+%      norm_vecs(i) = vecs(i) ./ norm(vecs(i),p);
+%      %disp(" ")
+%  end

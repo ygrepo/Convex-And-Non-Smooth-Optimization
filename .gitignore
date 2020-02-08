@@ -5,6 +5,7 @@ __pycache__
 # Remove Mac shit
 .DS_Store
 
+
 # Remove Vim temp files
 *sw*
 

@@ -97,6 +97,7 @@
 
 \begin{document}
 
+
 \noindent MATH-GA.2012.001 Selected Topics in Numerical Analysis :\\
 Convex and Nonsmooth Optimization, Spring 2020\\
 Homework Assignment 2 \\
@@ -126,6 +127,9 @@ $f(\theta x + (1-\theta) y) \le \theta t_1 + (1-\theta) t_2 \Rightarrow$  $f(\th
 	\ee
 	
 \item Show that if a convex cone K is closed, then $(K^*)^*$, the dual cone of the dual cone of K, is equal to K.
+source: class notes on the web pointing that $(K^*)^*$ can be seen as the intersection of halfspaces.
+
+Let K a convex closed cone, then $(K^*)^* = \{x^* | y^T x^* \ge 0, \forall y \in K^* \}$.  We can consider $(K^*)^*$ as the intersection of halfspaces $H_{x^* \in K} = \{y^T x^* \ge 0, \forall y \in K^* \}$. If $x \in K$ then $\forall y \in K^*, x^T y = y^T x \ge 0 \Rightarrow x \in (K^*)^*$. K being convex and closed by the corollary of the separating hyperplanes, $K = (K^*)^*$.
 
 \item BV Ex. 233 Find the dual cone of $\{ A \; x | x \ge 0 \}$, where $A \in \mathbf{R}^{m \times n}$. 
 The dual of $K = \{ A \; x | x \ge 0 \}$ is $K^* = \{ y | (A x)^T y \ge 0, \forall x \ge 0 \}$ or $K^* = \{ y | x^T (A^T y) \ge 0,  x \ge 0 \} = \{ y | (A^T y)^T x \ge 0, x \ge 0 \}$. 
@@ -222,7 +226,7 @@ We solve the same optimization problem with more inequalities and an interior ce
 	\label{fig2}
 \end{figure}
 
-\item If we choose A and b such that the hyperplanes intersect at the same point then we CVX finds a center with radius zero.
+\item If we choose A and b such that there is no interior point : if the hyperplanes intersect at the same point then CVX finds a center with radius zero, if they do not intersect then CVX will not find a solution.
 
 \item The problem to solve now is to find the largest "scaled unit ball" $\mathcal{B} = \{x_c + u | \| u \|_p \le r \}$ that lies in the polyhedron described by a set of linear inequalities:
 $\mathcal{P} = \{x \in \mathbf{R}^n | a_i^T x \le b_i, i=1, \cdots, m \}$. For any point of $\mathcal{B}$ lying in one halfspace $a_i^T x \le b_i$, similarly to the euclidean space, 
@@ -231,10 +235,10 @@ we have $\| u \|_p \le r \Rightarrow a_i^T x_c +  r \| a_i \|_p  \le b_i$ since 
 	\text{ maximize } &  r\\
 	\text{subject to }  & a_i^T x_c +  r \| a_i \|_p  \le b_i,  i=1, \cdots, m
 \end{align*}
-This is still an LP problem since the inequalities are still linear.
+This is still an LP problem since the inequalities are linear.
 We obtain different solutions for the same matrix $A$ and vector $b$, corresponding to different p-norm, $p=1$ is the diamond shape ball (fig.  ~\ref{fig3}),
 for $p=1.5$  the ball has a shape between the diamond and the circle $p=2$ (fig. ~\ref{fig4}), and as we increase $p$, for $p=\infty$ the ball becomes a square 
-(where either $\|x_1\| =1 \text{ and } \| x_2 \| \le 1 \text{ or } \| x_2 \| \le 1 \text{ and } \| x_ 2|| = 1$,  (fig. ~\ref{fig5})).
+(where either $\|x\| =1 \text{ and } \| y \| \le 1 \text{ or } \| x \| \le 1 \text{ and } \| y || = 1$,  (fig. ~\ref{fig5})).
 
 \begin{figure}[H]
 	\centering
@@ -258,7 +262,7 @@ for $p=1.5$  the ball has a shape between the diamond and the circle $p=2$ (fig.
 \begin{minted}{matlab}
 
 % Compute the Chebyshev center of a polyhedron
-function [x_sol, r_sol, x, y] = chebyshev_center_with_norm(A, b, p)
+function [x_sol, r_sol] = chebyshev_center_with_norm(A, b, p)
 % The goal is to find the largest Euclidean ball (i.e. its center and
 % radius) that lies in a polyhedron described by linear inequalites in this
 % fashion: P = {x : a_i'*x <= b_i, i=1,...,m}
@@ -330,7 +334,7 @@ function [x, y] = gen_random_vectors(n, p)
     
 \end{minted}
 
-\item As we decrease $p$, the norm of $a_i$ grows exponentially (as shown in figure ~\ref{fig6}), thus CVX, to solve the problem, quickly finds that the solution for the center is the intersection of the hyperplanes and for $r$ to be zero.
+\item As we decrease $p$, the p-norm of $a_i$ grows exponentially (as shown in figure ~\ref{fig6}), thus CVX, to solve the problem, finds that the solution for the center is the intersection of the hyperplanes if it exists and $r$ to be zero.
 
 \begin{figure}[H]
 	\centering

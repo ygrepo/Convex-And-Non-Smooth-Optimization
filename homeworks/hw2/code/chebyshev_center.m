@@ -7,9 +7,9 @@ function [x_sol, r_sol] = chebyshev_center(A, b)
 
 % Generate the data
 % randn('state',0);
-% n = 2; m = 2*n;
+% m = 2; n = 10*m;
 % A = randn(m,n);
-% b = A*rand(n,1) + 2*rand(m,1);
+% b = ones(n,1);
 % b = ones(4,1);
 % A = [2 2 -1 -1; 1 -1 2 -2];
 

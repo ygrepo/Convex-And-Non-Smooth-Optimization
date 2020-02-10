@@ -197,7 +197,7 @@ xlabel("x_1")
 ylabel("x_2")
 
 txt = "# inequalities:" + num2str(n);
-title({"Largest Euclidean ball lying in a 2D polyhedron", txt});
+title({"Largest Euclidean ball laying in a 2D polyhedron", txt});
 text(x_c(1), x_c(2), "\leftarrow  center")
 axis([-1 1 -1 1])
 axis equal
@@ -229,7 +229,7 @@ We solve the same optimization problem with more inequalities and an interior ce
 \item If we choose A and b such that there is no interior point : if the hyperplanes intersect at the same point then CVX finds a center with radius zero, if they do not intersect then CVX will not find a solution.
 
 \item The problem to solve now is to find the largest "scaled unit ball" $\mathcal{B} = \{x_c + u | \| u \|_p \le r \}$ that lies in the polyhedron described by a set of linear inequalities:
-$\mathcal{P} = \{x \in \mathbf{R}^n | a_i^T x \le b_i, i=1, \cdots, m \}$. For any point of $\mathcal{B}$ lying in one halfspace $a_i^T x \le b_i$, similarly to the euclidean space, 
+$\mathcal{P} = \{x \in \mathbf{R}^n | a_i^T x \le b_i, i=1, \cdots, m \}$. For any point of $\mathcal{B}$ laying in one halfspace $a_i^T x \le b_i$, similarly to the euclidean space, 
 we have $\| u \|_p \le r \Rightarrow a_i^T x_c +  r \| a_i \|_p  \le b_i$ since $g_i = \sup{\{a_i^T u | \| u \|_p \le r \}} = r \|a_i\|_p$. And the Chebyshev center can be determined by solving the problem:
 \begin{align*}
 	\text{ maximize } &  r\\
@@ -315,7 +315,7 @@ ylabel("y-axis")
 
 txt1 = "# inequalities:" + num2str(n);
 tx2 = "norm-p:" + num2str(p);
-title({"Largest 'scaled unit ball' lying in a 2D polyhedron", txt1, tx2});
+title({"Largest 'scaled unit ball' laying in a 2D polyhedron", txt1, tx2});
 text(x_c(1), x_c(2), "\leftarrow  center")
 axis([-1 1 -1 1])
 axis equal

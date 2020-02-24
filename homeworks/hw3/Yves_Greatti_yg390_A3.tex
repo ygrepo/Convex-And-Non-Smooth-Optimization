@@ -170,6 +170,7 @@ Yves Greatti - yg390\\
 		 \text{ maximize } & g(\lambda) =  \frac{- 9 \lambda^2}{\lambda + 1} + 1 + 8 \lambda \\
 		 \text{ subject to } & \lambda > -1
 		\end{align*}
+		
 	 	Based on the graph of $g(\lambda)$, it is concave.
 		Setting the derivative of $g(\lambda)$ to zero, leads to $g'(\lambda) = 8 - 9 \frac{\lambda (\lambda + 2)}{(\lambda + 1)^2} = 0$ which gives the dual optimal solution 
 		$\lambda^*=2$ and the dual optimal value $d^* = 5 = p^*$ thus strong duality holds.
@@ -180,7 +181,8 @@ Yves Greatti - yg390\\
 		And  for $p(u^*) = f(3 - \sqrt{1 + u}) = 11 + u - 6 \sqrt{1+u}$ reaches its global minimizer point
 		 $u^*_0$ when $p'(u^*_0) = 1 - \frac{3}{\sqrt{1 + u}} = 0 \Rightarrow u^*_0 = 8, p(u^*_0) = 1$. 
 		For $u \in [-1,8]$, the solution to the problem in x  is decreasing to the minimum value 1 to increase again when $u^* > 8$.
-				\[
+		
+		\[
 		 p(u^*)= \begin{dcases*}
 			          \infty  			& when  	 $u < -1$ \\
 			          11 + u - 6 \sqrt{1+u} & when	$u \in [-1,8]$ \\
@@ -199,6 +201,10 @@ Yves Greatti - yg390\\
 	 \ee
 	 
 	  \item BV Ex 5.21
+	  
+	  \be
+	  \item 
+	  
 	  The exponential function $e^{-x}$ is convex on $\mathbf{R}$, it then remains to determine if the Hessian of $f_1(x,y) = \frac{x^2}{y}$ is positive definite or semi definite.
 	  $$ \nabla^2 f_1(x,y) =
 	  \begin{bmatrix}
@@ -208,7 +214,21 @@ Yves Greatti - yg390\\
 	  The polynomial characteristic is $p(\lambda) = \frac{\lambda}{y^3} (y^3 \lambda - 2 (x^2 + y^2))$ so the eigenvalues are $0$ and $2 \frac{x^2 + y^2} {y^3} > 0, y > 0$. 
 	  Hence the Hessian is positive semidefinite and $f_1(x,y)$ is convex. The problem is a convex optimization problem.
 	  The minimizer of $e^{-x}$ satisfying the inequality constraint is $x=0$ and the optimal value is 1.
-		 
+	  
+	  \item The Lagrange dual function is $g(\lambda)=\inf_{x, y >0} (e^{-x} + \lambda \frac{x^2}{y})$
+	  \[
+		 g(\lambda)= \begin{dcases*}
+			          0 			& when  	 $\lambda \ge 0$ \\
+			          -\infty 		& when	 $\lambda < 0$
+		\end{dcases*}
+	\]
+	The optimal value is $d^*  = 0$ for $\lambda^* \ge 0$, and the duality gap is $p^* - d^* = 1$.		 
+	
+	\item Since there is not strong duality, Slater's condition cannot hold.
+	
+	%\item If $u < 0$ the problem is not defined then $p(u^*) = \infty$, if $u=0, p(u^*) = 1$ and if $u > 0, p(u^*) = 0$ . We observe that $p(u^*)  \ge 1 - \lambda^* u$.
+	
+	\ee
 \ee	
 
 \end{document}

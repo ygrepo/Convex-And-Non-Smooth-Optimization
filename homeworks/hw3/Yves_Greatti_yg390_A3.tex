@@ -226,9 +226,30 @@ Yves Greatti - yg390\\
 	
 	\item Since there is not strong duality, Slater's condition cannot hold.
 	
-	%\item If $u < 0$ the problem is not defined then $p(u^*) = \infty$, if $u=0, p(u^*) = 1$ and if $u > 0, p(u^*) = 0$ . We observe that $p(u^*)  \ge 1 - \lambda^* u$.
+	\item If $u < 0$ the problem is not defined then $p(u^*) = \infty$, if $u=0, p(u^*) = 1$ and if $u > 0, p(u^*) = 0$ . We observe that $p(u^*)  \ge 1 - \lambda^* u$ since $\lambda^* \ge 0$.
 	
 	\ee
+	
+	\item Show  that  for  convex  problems  of  the  form  (5.25),  that  is  (5.1)  with $f_0, f_1, \ldots, f_m$ convex and $h_1,\ldots,h_p$ affine, the set 
+	$\mathcal{A} = \{ (u,v,t) | \exists x \in \mathcal{D}, f_i(x) \le u_i, i=1,\ldots,m,  h_i(x) = v_i, i=1, \ldots, p,  f_0(x) \le t \} $ defined in BV (5.37) is convex.
+	
+	Proof: Take two points
+	$$(u_1, v_1, t_1), (u_2, v_2, t_2) \in  \mathcal{A}$$
+	$$\exists x_1, s.t. f_i(x_1) \le u_{1_i}, i=1,\ldots,m,  h_i(x_1) = v_{1_i}, i=1, \ldots, p, f_0(x_1) \le t_1$$
+	and 
+	$$\exists x_2, s.t. f_i(x_2) \le u_{2_i}, i=1,\ldots,m,  h_i(x_2) = v_{2_i}, i=1, \ldots, p, f_0(x_2) \le t_2$$
+	
+	$\forall \theta \in [0,1]$, we have
+	\begin{align*}
+		f_i(\theta x_1 + (1 - \theta) x_2) 	&\le		\theta f_i(x_1) 	+  (1 - \theta) 	f_i(x_2)	\\
+									&\le 		\theta u_{1_i} 	+  (1 - \theta)   	u_{2_i}  	\\
+		h_i(\theta x_1 + (1 - \theta) x_2) 	&= 		\theta h_i(x_1)  +  (1 - \theta)  	h_i(x_2)	\\
+									&=		\theta  v_{1_i} 	+  (1 - \theta)  	v_{2_i} 	\\	
+		f_0(\theta x_1 + (1 - \theta) x_2) 	&\le 		\theta f_0(x_1)  +  (1 - \theta)  	f_0(x_2)	\\		
+									&\le		\theta t_1 +  (1 - \theta)  t_2			
+	\end{align*}
+	$\theta (u_1, v_1, t_1) + (1-\theta)  (u_2, v_2, t_2) \in  \mathcal{A}$, thus $\mathcal{A}$ is convex.
+	
 \ee	
 
 \end{document}

@@ -292,9 +292,48 @@ Found for data set 2, SDP relaxation of two-way partitioning problem,optimal val
  
  Using this $V$, carry out the assignment algorithm on p.~1120 for the data sets 1 and 2 using $r$ with $r_i=1/\sqrt{n}$ 
  (instead of a random vector) and print the resulting partitioning of the
- vertices and the corresponding cut value. How does it compare to the optimal value of the SDP?
+ vertices and the corresponding cut value. How does it compare to the optimal value of the SDP?\\
+ 
+ \medskip
+The problem is to find an optimal partition of n elements, in  \href{http://www-math.mit.edu/~goemans/PAPERS/maxcut-jacm.pdf}{Goemans and Williamson's celebrated 1994 paper},
+given non negative weights, and the symmetric matrix of these weights $W$,  
+we want to solve the following integer quadratic program:
+\begin{align*}
+	& \text{maximize } \frac{1}{2} \sum_{i<j} w_{ij} (1- x_i x_j) \\
+	& \st x_i \in \{-1,1\}, i=1, \ldots,n
+\end{align*}
+We can replace these products $1 -x_i x_j$ by the dot product of n vectors $\vect{v_i},  i=1, \ldots,n, \in \R^n$ with the constraint that their $l_2$ norm is $1$.
 
-  
+Or equivalently we want to find the vector $\vect{x} \in \R^n$ which minimizes $\sum_{ij} x_i W_{ij} x_j = \vect{x}^T \mat{W} \vect{x}$ subject to $x_i^2 = 1, i=1, \ldots,n$.
+In BV exercise 5.39, we showed that, this last problem lead to the SPD relaxation problem (5.115):
+\begin{align*}
+	& \minz \tr{\mat{W} \mat{ X}} \\
+	& \st\mat{X} \succeq 0\\
+	&	X_{ii} = 1, \; i =1, \ldots, n
+\end{align*}
+with variable $\mat{X}= \vect{x} \vect{x}^T,  \mat{X} \in \textbf{S}^n $.
+$$
+	\mat{V}^T \mat{V} = 
+		\begin{bmatrix}
+			 \rule[0.5mm]{0.8cm}{0.1mm} 	& v_1 	&  \rule[0.5mm]{0.8cm}{0.1mm} \\
+			\rule[0.5mm]{0.8cm}{0.1mm}	& \vdots 	&  \rule[0.5mm]{0.8cm}{0.1mm}	 \\
+			\rule[0.5mm]{0.8cm}{0.1mm}	& v_n 	&  \rule[0.5mm]{0.8cm}{0.1mm} \\
+		\end{bmatrix}
+		\begin{bmatrix}
+			v_1 & \vline & \ldots & \vline  & v_n
+		\end{bmatrix}
+		=
+		\begin{bmatrix}
+			v_1^T v_1 	& 	\ldots 	& 	v_n^T v_1 	\\
+			\vdots		&	\ddots	& 	\vdots		\\
+			v_1^T v_n	 	& 	\ldots 	& 	v_n^T v_n
+		\end{bmatrix}
+$$	
+$\mat{X} = \mat{V}^T \mat{V} $ satisfies the constraints $\mat{X} \succeq 0$ (any matrix $\mat{A}^T \; \mat{A}$ or $\mat{A}^T \; \mat{A}$ is always positive definite).
+In addition, $\mat{X}_{ii}  = \|v_i\|_2^2 = 1, \; i =1, \ldots, n$ then $\mat{X}$ satisfies the constraints in (5.115).
+We can choose these vectors $\vect{v}_i$  to belong to the n-dimensional unit sphere $S_n$ hence they are not unique.
+Low rank to machine precision for  $\mat{X}$ will provide a suboptimal solution since the optimal solution is the solution with exact low rank.
+
  \item Explicitly solve (5.113) for data set 1 only.
  This problem is NP-hard so you will have to write a brute force method to solve it: there is no way to do it efficiently, but it should
  run fast enough on the smaller data set 1. According to Goemans and Williamson,

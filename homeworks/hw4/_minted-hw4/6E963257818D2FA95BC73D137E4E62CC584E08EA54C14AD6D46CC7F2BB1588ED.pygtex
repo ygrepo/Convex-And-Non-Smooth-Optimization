@@ -1,0 +1,118 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} Problem 3 \PYGZhy{} Question (b) \PYGZhy{}}
+\PYG{c}{\PYGZpc{} Solve the SDP given in BV (5.114) using data set 1 and data set 2}
+\PYG{c}{\PYGZpc{} In addition solve BV (5.115) using data set 1:}
+\PYG{c}{\PYGZpc{} 1\PYGZhy{} Compare computed optimal and dual variables from (5.115)}
+\PYG{c}{\PYGZpc{}    with computed optimal primal variables from (5.114) and vice\PYGZhy{}versa}
+\PYG{c}{\PYGZpc{} 2\PYGZhy{} Compute approximate ranks of the computed optimal primal and dual}
+\PYG{c}{\PYGZpc{}    matrices}
+\PYG{c}{\PYGZpc{} 3\PYGZhy{} Test for complimentarity of these matrices.}
+
+
+\PYG{n}{clear}
+\PYG{n}{cvx\PYGZus{}quiet} \PYG{n}{true}
+
+\PYG{n}{W} \PYG{p}{=} \PYG{n}{load}\PYG{p}{(}\PYGZdq{}\PYG{n}{hw4data1}\PYG{p}{.}\PYG{n}{mat}\PYGZdq{}\PYG{p}{).}\PYG{n}{W}\PYG{p}{;}
+\PYG{p}{[}\PYG{n}{opt\PYGZus{}val}\PYG{p}{,} \PYG{n}{X1}\PYG{p}{,} \PYG{n}{nu1}\PYG{p}{]} \PYG{p}{=} \PYG{n}{solve\PYGZus{}dual}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Found} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{1}\PYG{p}{,}
+ \PYG{n}{Lagrange} \PYG{n}{dual} \PYG{n}{problem}\PYG{p}{,} \PYG{n}{optimal} \PYG{n}{value}\PYG{p}{:}\PYG{c}{\PYGZpc{}4.2f\PYGZbs{}n\PYGZdq{},  opt\PYGZus{}val)}
+
+\PYG{p}{[}\PYG{n}{opt\PYGZus{}val}\PYG{p}{,} \PYG{n}{X2}\PYG{p}{,} \PYG{n}{nu2}\PYG{p}{,} \PYG{n}{lambda}\PYG{p}{]} \PYG{p}{=} \PYG{n}{solve\PYGZus{}sdp\PYGZus{}relaxation}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Found} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{1}\PYG{p}{,}
+\PYG{n}{SDP} \PYG{n}{relaxation} \PYG{n}{of} \PYG{n}{two}\PYG{o}{\PYGZhy{}}\PYG{n}{way} \PYG{n}{partitioning} \PYG{n}{problem}\PYG{p}{,}\PYG{n}{optimal} \PYG{n}{value}\PYG{p}{:}\PYG{c}{\PYGZpc{}4.2f\PYGZbs{}n\PYGZdq{},  opt\PYGZus{}val)}
+
+\PYG{k}{if} \PYG{n}{is\PYGZus{}equal}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{nu1}\PYG{p}{),} \PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{nu2}\PYG{p}{))}
+    \PYG{n+nb}{disp}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{dual} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.115}
+    \PYG{n}{same} \PYG{n}{as} \PYG{n}{computed} \PYG{n}{primal} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.114}\PYGZdq{}\PYG{p}{)}
+\PYG{k}{else}
+    \PYG{n+nb}{disp}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{dual} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.115}
+    \PYG{n}{different} \PYG{n}{from} \PYG{n}{the} \PYG{n}{computed} \PYG{n}{primal} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.114}\PYGZdq{}\PYG{p}{)}
+\PYG{k}{end}
+
+\PYG{k}{if} \PYG{n}{is\PYGZus{}equal}\PYG{p}{(}\PYG{n}{X1}\PYG{p}{,} \PYG{n}{X2}\PYG{p}{)}
+    \PYG{n+nb}{disp}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{primal} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.115}
+    \PYG{n}{same} \PYG{n}{as} \PYG{n}{computed} \PYG{n}{dual} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.114}\PYGZdq{}\PYG{p}{)}
+\PYG{k}{else}
+    \PYG{n+nb}{disp}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{primal} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.115}
+    \PYG{n}{different} \PYG{n}{than} \PYG{n}{computed} \PYG{n}{dual} \PYG{n}{variables} \PYG{n}{from} \PYG{l+m+mf}{5.114}\PYGZdq{}\PYG{p}{)}
+\PYG{k}{end}
+
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Rank}\PYG{p}{(}\PYG{n}{optimal} \PYG{n}{primal} \PYG{n}{matrix}\PYG{p}{):} \PYG{c}{\PYGZpc{}d, Rank(optimal dual matrix): \PYGZpc{}d\PYGZbs{}n\PYGZdq{},...}
+    \PYG{n}{compute\PYGZus{}rank}\PYG{p}{(}\PYG{n}{X2}\PYG{p}{)} \PYG{p}{,} \PYG{n}{compute\PYGZus{}rank}\PYG{p}{(}\PYG{n}{lambda}\PYG{p}{))}
+
+\PYG{n}{tol} \PYG{p}{=} \PYG{l+m+mf}{1e\PYGZhy{}4}\PYG{p}{;}
+\PYG{k}{if} \PYG{n}{are\PYGZus{}complementary}\PYG{p}{(}\PYG{n}{X2}\PYG{p}{,} \PYG{n}{lambda}\PYG{p}{,} \PYG{n}{tol}\PYG{p}{)}
+    \PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{optimal} \PYG{n}{and} \PYG{n}{dual} \PYG{n}{matrices} \PYG{n}{are} \PYG{n}{complementary}\PYG{p}{,}
+    \PYG{n}{tol}\PYG{p}{:}\PYG{c}{\PYGZpc{}2.5f\PYGZbs{}n\PYGZdq{}, tol)}
+\PYG{k}{else}
+    \PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Computed} \PYG{n}{optimal} \PYG{n}{and} \PYG{n}{dual} \PYG{n}{matrices} \PYG{n}{are} \PYG{n}{not} \PYG{n}{complementary}\PYG{p}{,}
+    \PYG{n}{tol}\PYG{p}{:}\PYG{c}{\PYGZpc{}5.2f\PYGZbs{}n\PYGZdq{}, tol)}
+\PYG{k}{end}
+
+\PYG{n}{clear}
+\PYG{n}{W} \PYG{p}{=} \PYG{n}{load}\PYG{p}{(}\PYGZdq{}\PYG{n}{hw4data2}\PYG{p}{.}\PYG{n}{mat}\PYGZdq{}\PYG{p}{).}\PYG{n}{W}\PYG{p}{;}
+\PYG{p}{[}\PYG{n}{opt\PYGZus{}val}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n}{solve\PYGZus{}dual}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Found} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{2}\PYG{p}{,}
+\PYG{n}{Lagrange} \PYG{n}{dual} \PYG{n}{problem}\PYG{p}{,} \PYG{n}{optimal} \PYG{n}{value}\PYG{p}{:}\PYG{c}{\PYGZpc{}4.2f\PYGZbs{}n\PYGZdq{},  opt\PYGZus{}val)}
+\PYG{p}{[}\PYG{n}{opt\PYGZus{}val}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n}{solve\PYGZus{}sdp\PYGZus{}relaxation}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Found} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{2}\PYG{p}{,}
+\PYG{n}{SDP} \PYG{n}{relaxation} \PYG{n}{of} \PYG{n}{two}\PYG{o}{\PYGZhy{}}\PYG{n}{way} \PYG{n}{partitioning} \PYG{n}{problem}\PYG{p}{,}\PYG{n}{optimal} \PYG{n}{value}\PYG{p}{:}\PYG{c}{\PYGZpc{}4.2f\PYGZbs{}n\PYGZdq{},  opt\PYGZus{}val)}
+
+\PYG{k}{function}\PYG{+w}{ }[opt\PYGZus{}val, X, nu] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{solve\PYGZus{}dual}\PYG{p}{(}W\PYG{p}{)}
+
+\PYG{p}{[}\PYG{n}{n}\PYG{p}{,}\PYG{o}{\PYGZti{}}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+
+\PYG{n}{cvx\PYGZus{}begin} \PYG{n}{sdp}
+    \PYG{n}{variable} \PYG{n}{nu}\PYG{p}{(}\PYG{n}{n}\PYG{p}{)}
+    \PYG{n}{dual} \PYG{n}{variable} \PYG{n}{X}
+    \PYG{n}{maximize} \PYG{p}{(}\PYG{o}{\PYGZhy{}}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{nu}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{))}
+    \PYG{n}{X}\PYG{p}{:} \PYG{n}{W} \PYG{o}{+} \PYG{n+nb}{diag}\PYG{p}{(}\PYG{n}{nu}\PYG{p}{)} \PYG{o}{==} \PYG{n}{semidefinite}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{n}{cvx\PYGZus{}end}
+\PYG{n}{opt\PYGZus{}val} \PYG{p}{=} \PYG{n}{cvx\PYGZus{}optval}\PYG{p}{;}
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }[opt\PYGZus{}val, X, nu, lambda]  \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{solve\PYGZus{}sdp\PYGZus{}relaxation}\PYG{p}{(}W\PYG{p}{)}
+
+\PYG{p}{[}\PYG{n}{n}\PYG{p}{,}\PYG{o}{\PYGZti{}}\PYG{p}{]=}\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+
+\PYG{n}{cvx\PYGZus{}begin} \PYG{n}{sdp}
+    \PYG{n}{variable} \PYG{n}{X}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{n}{n}\PYG{p}{)} \PYG{n}{symmetric}
+    \PYG{n}{dual} \PYG{n}{variables} \PYG{n}{nu} \PYG{n}{lambda}
+    \PYG{n}{minimize} \PYG{n}{trace}\PYG{p}{(}\PYG{n}{W} \PYG{o}{*} \PYG{n}{X}\PYG{p}{)}
+    \PYG{n}{nu}\PYG{p}{:} \PYG{n+nb}{diag}\PYG{p}{(}\PYG{n}{X}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{lambda}\PYG{p}{:} \PYG{n}{X} \PYG{o}{==} \PYG{n}{semidefinite}\PYG{p}{(}\PYG{n}{n}\PYG{p}{);}
+\PYG{n}{cvx\PYGZus{}end}
+\PYG{n}{opt\PYGZus{}val} \PYG{p}{=} \PYG{n}{cvx\PYGZus{}optval}\PYG{p}{;}
+
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }t \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{is\PYGZus{}equal}\PYG{p}{(}A, B\PYG{p}{)}
+\PYG{c}{\PYGZpc{} We are expecting that A and B have same dimensions.}
+\PYG{c}{\PYGZpc{} We could eventually perform a check for this assumption.}
+
+    \PYG{p}{[}\PYG{n}{m}\PYG{p}{,} \PYG{n}{n}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{A} \PYG{o}{==} \PYG{n}{B}\PYG{p}{,} \PYGZdq{}\PYG{n}{all}\PYGZdq{}\PYG{p}{)} \PYG{o}{==} \PYG{n}{m} \PYG{o}{*} \PYG{n}{n}\PYG{p}{)}
+        \PYG{n}{t} \PYG{p}{=} \PYG{n}{true}\PYG{p}{;}
+    \PYG{k}{else}
+        \PYG{n}{t} \PYG{p}{=} \PYG{n}{false}\PYG{p}{;}
+    \PYG{k}{end}
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }rk \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{compute\PYGZus{}rank}\PYG{p}{(}A\PYG{p}{)}
+\PYG{c}{\PYGZpc{} Assume A is symmetric}
+\PYG{n}{D} \PYG{p}{=} \PYG{n}{eig}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{n}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}
+\PYG{n}{k} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{k}{for} \PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+    \PYG{k}{if} \PYG{n}{D}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,}\PYG{l+m+mi}{1}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{0}
+        \PYG{n}{k} \PYG{p}{=} \PYG{n}{k} \PYG{o}{+} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{end}
+\PYG{k}{end}
+\PYG{n}{rk} \PYG{p}{=} \PYG{n}{n} \PYG{o}{\PYGZhy{}} \PYG{n}{k}\PYG{p}{;}
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }t \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{are\PYGZus{}complementary}\PYG{p}{(}A, B, tol\PYG{p}{)}
+\PYG{c}{\PYGZpc{} Testing if A * B \PYGZti{} 0}
+    \PYG{n}{t} \PYG{p}{=} \PYG{n+nb}{isempty}\PYG{p}{(}\PYG{n+nb}{find}\PYG{p}{(}\PYG{n}{A}\PYG{o}{*} \PYG{n}{B} \PYG{o}{\PYGZgt{}} \PYG{n}{tol}\PYG{p}{));}
+\PYG{k}{end}
+\end{Verbatim}

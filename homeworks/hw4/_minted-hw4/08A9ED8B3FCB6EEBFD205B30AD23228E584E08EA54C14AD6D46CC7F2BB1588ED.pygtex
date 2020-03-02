@@ -1,0 +1,52 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{} Problem 3 Question c \PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}}
+\PYG{c}{\PYGZpc{} Implementation of MAXCUT algorithm}
+\PYG{c}{\PYGZpc{} Using data set 1 and data set 2 to determine}
+\PYG{c}{\PYGZpc{} maxcut and the corresponding partition.}
+
+\PYG{n}{clear}
+\PYG{n}{cvx\PYGZus{}quiet} \PYG{n}{true}
+
+\PYG{n}{W} \PYG{p}{=} \PYG{n}{load}\PYG{p}{(}\PYGZdq{}\PYG{n}{hw4data1}\PYG{p}{.}\PYG{n}{mat}\PYGZdq{}\PYG{p}{).}\PYG{n}{W}\PYG{p}{;}
+\PYG{p}{[}\PYG{n}{n}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{X}\PYG{p}{,} \PYG{n}{cut\PYGZus{}value}\PYG{p}{]} \PYG{p}{=} \PYG{n}{maxcut}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{n}{W}\PYG{p}{);}
+\PYG{n}{V} \PYG{p}{=} \PYG{n}{chol}\PYG{p}{(}\PYG{n}{X}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Max}\PYG{p}{.} \PYG{n}{cut} \PYG{n}{value} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{1}\PYG{p}{:}\PYG{c}{\PYGZpc{}5.2f\PYGZbs{}n\PYGZdq{}, cut\PYGZus{}value)}
+\PYG{p}{[}\PYG{n}{partition}\PYG{p}{]} \PYG{p}{=} \PYG{n}{get\PYGZus{}partition}\PYG{p}{(}\PYG{n}{V}\PYG{p}{,} \PYG{n}{n}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Partition} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{1}\PYG{o}{\PYGZbs{}}\PYG{n}{n}\PYGZdq{}\PYG{p}{)}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{partition}\PYG{o}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{clear}
+\PYG{n}{W} \PYG{p}{=} \PYG{n}{load}\PYG{p}{(}\PYGZdq{}\PYG{n}{hw4data2}\PYG{p}{.}\PYG{n}{mat}\PYGZdq{}\PYG{p}{).}\PYG{n}{W}\PYG{p}{;}
+\PYG{p}{[}\PYG{n}{n}\PYG{p}{,} \PYG{o}{\PYGZti{}}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{W}\PYG{p}{);}
+\PYG{p}{[}\PYG{n}{X}\PYG{p}{,} \PYG{n}{cut\PYGZus{}value}\PYG{p}{]} \PYG{p}{=} \PYG{n}{maxcut}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{n}{W}\PYG{p}{);}
+\PYG{n}{V} \PYG{p}{=} \PYG{n}{chol}\PYG{p}{(}\PYG{n}{X}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Max}\PYG{p}{.} \PYG{n}{cut} \PYG{n}{value} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{2}\PYG{p}{:}\PYG{c}{\PYGZpc{}5.2f\PYGZbs{}n\PYGZdq{}, cut\PYGZus{}value)}
+\PYG{p}{[}\PYG{n}{partition}\PYG{p}{]} \PYG{p}{=} \PYG{n}{get\PYGZus{}partition}\PYG{p}{(}\PYG{n}{V}\PYG{p}{,} \PYG{n}{n}\PYG{p}{);}
+\PYG{n}{fprintf}\PYG{p}{(}\PYGZdq{}\PYG{n}{Partition} \PYG{k}{for} \PYG{n}{data} \PYG{n}{set} \PYG{l+m+mi}{2}\PYG{o}{\PYGZbs{}}\PYG{n}{n}\PYGZdq{}\PYG{p}{)}
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{n}{partition}\PYG{o}{\PYGZsq{}}\PYG{p}{)}
+
+\PYG{k}{function}\PYG{+w}{ }[X, cut\PYGZus{}value] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{maxcut}\PYG{p}{(}n, W\PYG{p}{)}
+\PYG{n}{cvx\PYGZus{}begin} \PYG{n}{sdp}
+    \PYG{n}{variable} \PYG{n}{X}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{n}{n}\PYG{p}{)} \PYG{n}{symmetric}
+    \PYG{n}{maximize} \PYG{l+m+mf}{0.5} \PYG{o}{.*} \PYG{n}{sum}\PYG{p}{(}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{W} \PYG{o}{.*} \PYG{p}{(}\PYG{n+nb}{ones}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,}\PYG{n}{n}\PYG{p}{)} \PYG{o}{\PYGZhy{}} \PYG{n}{X}\PYG{p}{)))}
+    \PYG{n+nb}{diag}\PYG{p}{(}\PYG{n}{X}\PYG{p}{)} \PYG{o}{==} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{n}{X} \PYG{o}{\PYGZgt{}}\PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{n}{cvx\PYGZus{}end}
+\PYG{n}{cut\PYGZus{}value} \PYG{p}{=} \PYG{n}{cvx\PYGZus{}optval}\PYG{p}{;}
+
+\PYG{k}{end}
+
+\PYG{k}{function}\PYG{+w}{ }[partition] \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{get\PYGZus{}partition}\PYG{p}{(}V, n\PYG{p}{)}
+\PYG{n}{partition} \PYG{p}{=} \PYG{n+nb}{zeros}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+\PYG{n}{r} \PYG{p}{=} \PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n+nb}{sqrt}\PYG{p}{(}\PYG{n}{n}\PYG{p}{))} \PYG{o}{.*} \PYG{n+nb}{ones}\PYG{p}{(}\PYG{n}{n}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{);}
+
+\PYG{k}{for} \PYG{n+nb}{i}\PYG{p}{=}\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{n}
+    \PYG{k}{if} \PYG{n+nb}{dot}\PYG{p}{(}\PYG{n}{V}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,:),} \PYG{n}{r}\PYG{p}{)} \PYG{o}{\PYGZgt{}}\PYG{p}{=} \PYG{l+m+mi}{0}
+        \PYG{n}{partition}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{)} \PYG{p}{=} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{k}{else}
+        \PYG{n}{partition}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{)} \PYG{p}{=} \PYG{l+m+mi}{0}\PYG{p}{;}
+    \PYG{k}{end}
+\PYG{k}{end}
+\PYG{k}{end}
+\end{Verbatim}

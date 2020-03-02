@@ -1,4 +1,6 @@
 \begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{} Problem 3 Question b \PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}\PYGZpc{}}
+
 \PYG{c}{\PYGZpc{} Problem 3 \PYGZhy{} Question (b) \PYGZhy{}}
 \PYG{c}{\PYGZpc{} Solve the SDP given in BV (5.114) using data set 1 and data set 2}
 \PYG{c}{\PYGZpc{} In addition solve BV (5.115) using data set 1:}
@@ -87,7 +89,7 @@
 \PYG{k}{end}
 
 \PYG{k}{function}\PYG{+w}{ }t \PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{is\PYGZus{}equal}\PYG{p}{(}A, B\PYG{p}{)}
-\PYG{c}{\PYGZpc{} We are expecting that A and B have same dimensions.}
+\PYG{c}{\PYGZpc{} We are expecting that A and B have the same dimensions.}
 \PYG{c}{\PYGZpc{} We could eventually perform a check for this assumption.}
 
     \PYG{p}{[}\PYG{n}{m}\PYG{p}{,} \PYG{n}{n}\PYG{p}{]} \PYG{p}{=} \PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{A}\PYG{p}{);}

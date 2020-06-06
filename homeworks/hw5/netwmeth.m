@@ -1,5 +1,4 @@
-function [f_all, gnorm_all, x_end] = gradmeth(fun, x0, tol, maxit)
-
+function [f_all,gnorm_all, x_end] = netwmeth(fun, x0, tol, maxit)
 %code for gradient method, including backtracking line search
 %Input
 %   fun : anonymous function x0: starting point
@@ -17,8 +16,8 @@ x = x0;
 x_end = x0;
 
 while i <= maxit % controls the number of iterations max.
-    [f, g, ~] = fun(x);
-    dx = -g; % Use negative gradient descent as descent direction
+    [f, g, h] = fun(x);
+    dx = -h\g; % Use negative newtown update as descent direction
     f_all(i) = f;
     gnorm_all(i) = norm(g);
     
@@ -65,3 +64,4 @@ while 1
     end
 end
 end
+

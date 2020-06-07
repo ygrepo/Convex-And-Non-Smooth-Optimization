@@ -1,4 +1,5 @@
-function [f,g] = quad(x,A,b)
+function [f,g,h] = hilbert_fun(x,A,b)
 % quadratic function f(x) = 1/2 x'Ax + b'x
 f = 0.5*x'*A*x + b'*x;
 g = A*x + b;
+h = A;

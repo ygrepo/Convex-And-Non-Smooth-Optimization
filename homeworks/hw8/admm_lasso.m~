@@ -1,0 +1,31 @@
+%% admm_lasso
+
+clear all
+clc
+
+
+
+M = 100000;
+density = 2/M;
+N = 10000;
+A = sprandn(M, N, density);
+b=randn(M,1);
+
+lambda = 0.2;
+rho = 2;
+
+h = lasso(A, b, lambda, rho);
+
+h.admm_iter = length(h.admm_optval);
+K = max([h.prox_iter h.fast_iter h.admm_iter]);
+h.admm_optval = padarray(h.admm_optval', K-h.admm_iter, h.p_admm, 'post');
+fig = figure;
+
+% plot(1:K, h.cvx_optval,  'k--', ...
+%      1:K, h.prox_optval, 'r-', ...
+%      1:K, h.fast_optval, 'g-', ...
+     1:K, h.admm_optval, 'b-');
+
+xlim([0 75]);
+legend('True', 'Proximal gradient', 'Accelerated', 'ADMM');
+print -depsc lasso_comp.eps;

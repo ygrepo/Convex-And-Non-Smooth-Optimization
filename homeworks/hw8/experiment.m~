@@ -68,10 +68,10 @@ rho = 1;
     eps_pri, eps_dual] = lasso_admm(A, b, lambda, rho);
 [x_star_cvx, p_star_cvx] = lasso_cvx(A,b, lambda);
 figure, hold on, grid on
-p_star_cvx_values = p_star_cvx*ones(K,1);
+p_star_cvx = p_star_cvx*ones(K,1);
 
 
-plot(1:K, p_star_cvx_values,  'k--', 1:K, f_all, 'r-');
+plot(1:K, p_star_cvx,  'k--', 1:K, f_all, 'r-');
 title('Objective ADMM method','FontSize', 14);
 xlabel('Iterations');
 ylabel('Objective value');
@@ -83,13 +83,13 @@ figure, hold on, grid on
 % ADMM
 
 semilogy(1:K, f_all - p_star_admm, "k-o", 'LineWidth',1,'MarkerSize',3);
-semilogy(1:K, f_all - p_star_cvx, "b-^", 'LineWidth',1,'MarkerSize',3);
+semilogy(1:K, f_all - p_star_admm, "b-^", 'LineWidth',1,'MarkerSize',3);
 
 % Legend, axis and title
 title('Objective error for the ADMM method','FontSize', 14);
 xlabel('Iterations');
 ylabel('Objective value');
-legend('ADMM error','CVX error');
+legend('ADMM error');
 
 
 %% Plot norms
@@ -97,8 +97,8 @@ legend('ADMM error','CVX error');
 figure, hold on, grid on
 
 % ||r||2^2 and ||s||2^2s
-semilogy(1:K, r_norm, "b-*", 'LineWidth',1,'MarkerSize',3);
-semilogy(1:K, s_norm, "c-o", 'LineWidth',1,'MarkerSize',3);
+semilogy(1:K, h.r_norm, "b-*", 'LineWidth',1,'MarkerSize',3);
+semilogy(1:K, h.s_norm, "c-o", 'LineWidth',1,'MarkerSize',3);
 
 
 % Legend, axis and title
@@ -111,8 +111,8 @@ legend('r norm', 's norm');
 
 figure, hold on, grid on
 
-semilogy(1:K, eps_pri, "b-*", 'LineWidth',1,'MarkerSize',3);
-semilogy(1:K, eps_dual, "c-o", 'LineWidth',1,'MarkerSize',3);
+semilogy(1:K, h.eps_pri, "b-*", 'LineWidth',1,'MarkerSize',3);
+semilogy(1:K, h.eps_dual, "c-o", 'LineWidth',1,'MarkerSize',3);
 
 
 % Legend, axis and title

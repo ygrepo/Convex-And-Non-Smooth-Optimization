@@ -9,7 +9,7 @@ b = ones(n,1);
 % the quadratic objective function
 fun = @(x)hilbert_fun(x, A, b);
 
-% closed-form solution to the quadratic optimizartion problem
+% closed-form solution to the quadratic optimization problem
 xstar = -A\b;
 pstar = fun(xstar);
 

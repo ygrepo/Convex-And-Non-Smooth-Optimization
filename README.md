@@ -1,1 +1,1 @@
-# Convex And Non Smooth Optimization Class
+# Convex And Non Smooth Optimization Course

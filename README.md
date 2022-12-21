@@ -1,1 +1,1 @@
-# Convex And Non Smooth Optimization Course
+# NYU Convex And Non Smooth Optimization Course
